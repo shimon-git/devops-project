@@ -15,30 +15,6 @@ This project involves creating a Python web application, setting it up with Ngin
 ### Route: `/showcount`
 - Returns the global counter number to the browser.
 
-## Project Structure
-
-project-root/
-
-├── py-web-app/
-│ ├── app.py
-│ ├── db.py
-│ ├── main.py
-│ ├── config.ini
-│ ├── requirements.txt
-│ └── ...
-├── nginx/
-│ ├── nginx.conf
-│ ├── html/
-│ └── logs/
-├── mysql/
-│ ├── .env
-│ ├── data/
-│ └── logs/
-├── .dockerignore
-├── Dockerfile
-├── docker-compose.yml
-├── scale.sh
-└── README.md
 
 
 ## Docker Setup
