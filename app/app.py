@@ -7,7 +7,7 @@ from db import DB
 class App:
     def __init__(self, app_conf):
         self.app = Flask(__name__) #Initialize a new flask instance
-        
+        self.setup_routes()#Setup the routes
         self.db = DB(#Initialize a new DB instance
             host=app_conf["host"],
             port=app_conf["port"],
@@ -19,7 +19,7 @@ class App:
     def setup_routes(self):
         #Handler for "/" route
         @self.app.route("/")
-        def index(self):
+        def index():
             client_ip = request.remote_addr #Retrieve the client IP
             internal_ip = socket.gethostbyname(socket.gethostname()) #Retrieve the internal IP
             time_stamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S") #Create a formatted time stamp to log the request
@@ -34,7 +34,7 @@ class App:
         
         #Handler for "/showcount" route
         @self.app.route("/showcount")
-        def show_count(self):
+        def show_count():
             return f"Global Counter: {self.db.get_counter()}" #Return The global counter number
     
     #Start the flask app
