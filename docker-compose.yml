@@ -2,7 +2,6 @@ version: "3.9"
 services:
   nginx:
     image: "nginx:latest"
-    container_name: "devops-project-nginx"
     deploy:
       replicas: 3
     ports:
@@ -16,7 +15,6 @@ services:
   
   db:
     image: "mysql:latest"
-    container_name: "devops-project-mysql"
     env_file:
       - "./mysql/.env"
     volumes:
@@ -27,6 +25,5 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-    container_name: "devops-project-app"
     depends_on:
       - "db"
