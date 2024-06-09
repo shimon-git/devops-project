@@ -2,11 +2,15 @@ from flask import Flask, request, make_response
 import socket
 from datetime import datetime
 from db import DB
+import logging
+from logging.handlers import RotatingFileHandler
+
 
 
 class App:
     def __init__(self, app_conf):
         self.app = Flask(__name__) #Initialize a new flask instance
+        self.setup_logging() # Set up logging
         self.setup_routes()#Setup the routes
         self.db = DB(#Initialize a new DB instance
             host=app_conf["host"],
@@ -14,7 +18,18 @@ class App:
             db=app_conf["database"],
             user=app_conf["user"],
             password=app_conf["password"]
-        ) 
+        )
+
+    
+    def setup_logging(self):
+        # Create a file handler object
+        handler = RotatingFileHandler('/app/logs/app.log', maxBytes=10000, backupCount=1)
+        handler.setLevel(logging.INFO)
+        # Create a logging format
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        # Add the handler to the Flask app's logger
+        self.app.logger.addHandler(handler)
 
     def setup_routes(self):
         #Handler for "/" route

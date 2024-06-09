@@ -15,13 +15,13 @@ case $1 in
     up)
     # Scale up 5 replicas
     echo "Scaling up to 5 replicas..."
-    docker-compose up --scale app=5 -d
+    docker compose up --scale app=5 -d
     ;;
 
     down)
     # Scale down to 3 replica
     echo "Scaling down to 3 replica..."
-    docker-compose up --scale app=3 -d
+    docker compose up --scale app=3 -d
     ;;
 
   *)
