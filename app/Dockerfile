@@ -5,13 +5,13 @@ FROM python:3.12
 WORKDIR /app
 
 #Copy the requirments file
-COPY app/requirments.txt .
+COPY requirements.txt .
 
 #Install the required packages using pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 #Copy the application folder content
-COPY app /app
+COPY . /app
 
 #Start the application
 CMD [ "python", "main.py", "config.ini" ]

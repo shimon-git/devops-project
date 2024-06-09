@@ -1,23 +1,46 @@
 import mysql.connector
 import textwrap
 import atexit
+from time import sleep
 
 class DB:
     def __init__(self, host, port, db, user, password):
+        self.connection_retries = 5 #Number of connection retry to the db
+        
         #Tables name
         self.access_logs_table = "access_logs"
         self.counter_table = "counter"
-        
-        self.conn = mysql.connector.connect(#Create a connection to the DB
-            host=host,
-            port=port,
-            database=db,
-            user=user,
-            password=password
-        )
+
+        self.conn = self.connect_to_db(host, port, db, user, password) #Create a connection to the DB
         self.cursor = self.conn.cursor()#Create a cursor object to communicate with the DB
-        
-        self.queries = {#Queries for sql operations
+        self.queries = self.get_queries()##Queries for sql operations
+        self.create_table() #Create the required tables of it not exist
+        atexit.register(self.close) #Ensure connection is closed on exit
+    
+    #Connecting to db
+    def connect_to_db(self, host, port, db, user, password):
+        while self.connection_retries > 0:
+            try:
+                conn = mysql.connector.connect(#Create a connection to the DB
+                    host=host,
+                    port=port,
+                    database=db,
+                    user=user,
+                    password=password
+                )
+                return conn #Return the connection if successful
+            
+            except mysql.connector.Error as e:
+                print(f"Error: {e}") #Print the error message
+                self.connection_retries -= 1 #Decrease the retry count
+                if self.connection_retries > 0:
+                    sleep(2) #Backoff for 2 secondes before retrying again
+                else:
+                    raise mysql.connector.Error(e) #Raise the original error if the all retries fail
+                
+    #Return the all needed queries for the app
+    def get_queries(self):
+        return {
             "create_table": {#Create table queries
                 "access_log": textwrap.dedent(f'''
                     CREATE TABLE IF NOT EXISTS {self.access_logs_table} (
@@ -50,10 +73,7 @@ class DB:
                 '''
             }
         }
-        
-        self.create_table() #Create the required tables of it not exist
-        atexit.register(self.close) #Ensure connection is closed on exit
-
+    
     #Create new table
     def create_table(self):
         #Iterate through crete table queries to create the all required tables

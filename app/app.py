@@ -36,3 +36,7 @@ class App:
         @self.app.route("/showcount")
         def show_count(self):
             return f"Global Counter: {self.db.get_counter()}" #Return The global counter number
+    
+    #Start the flask app
+    def run(self, host="0.0.0.0", port=5000):
+        self.app.run(host=host, port=port)

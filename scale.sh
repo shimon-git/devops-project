@@ -11,10 +11,7 @@ if [ $# -eq 0 ]; then
     usage
 fi
 
-# Check the first argument for the command
-command=$1
-
-case $command in
+case $1 in
     up)
     # Scale up 5 replicas
     echo "Scaling up to 5 replicas..."
