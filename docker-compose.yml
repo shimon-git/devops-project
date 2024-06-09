@@ -20,3 +20,11 @@ services:
     volumes:
       - "./mysql/data:/var/lib/mysql"
       - "./mysql/logs:/var/log/mysql"
+  
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: "devops-project-app"
+    depends_on:
+      - "db"
