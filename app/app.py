@@ -22,7 +22,7 @@ class App:
         def index():
             client_ip = request.remote_addr #Retrieve the client IP
             internal_ip = socket.gethostbyname(socket.gethostname()) #Retrieve the internal IP
-            time_stamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S") #Create a formatted time stamp to log the request
+            time_stamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")#Create a formatted time stamp to log the request
 
             self.db.insert_log(client_ip,internal_ip,time_stamp) #Save access log
             self.db.increase_counter() #Increase the global counter

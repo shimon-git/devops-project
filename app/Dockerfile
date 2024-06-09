@@ -13,5 +13,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 #Copy the application folder content
 COPY . /app
 
-# Start the application and redirect logs to a file
-CMD ["sh", "-c", "python main.py config.ini > /app/logs/flask.log 2>&1"]
+#Start the application
+CMD [ "python", "main.py", "config.ini" ]

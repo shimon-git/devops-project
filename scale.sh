@@ -19,9 +19,9 @@ case $1 in
     ;;
 
     down)
-    # Scale down to 1 replica
-    echo "Scaling down to 1 replica..."
-    docker-compose up --scale app=1 -d
+    # Scale down to 3 replica
+    echo "Scaling down to 3 replica..."
+    docker-compose up --scale app=3 -d
     ;;
 
   *)

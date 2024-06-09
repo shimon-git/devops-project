@@ -22,6 +22,8 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+    deploy:
+      replicas: 3
     volumes:
       - "./app/logs/flask.log:/app/logs/flask.log"
     depends_on:
