@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   nginx:
-    image: "nginx:latest"
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
       - "80:80"
     volumes:
@@ -25,6 +27,6 @@ services:
     deploy:
       replicas: 3
     volumes:
-      - "./app/logs/flask.log:/app/logs/flask.log"
+      - "./app/logs/:/app/logs/"
     depends_on:
       - "db"
