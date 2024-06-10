@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 
 # Start the application and redirect logs to both a file and the terminal
-CMD ["sh", "-c", "python main.py config.ini 2>&1 | tee /app/logs/app.log"]
+CMD ["sh", "-c", "python main.py config.ini 2>&1 | tee /app/logs/app_$(hostname).log"]
